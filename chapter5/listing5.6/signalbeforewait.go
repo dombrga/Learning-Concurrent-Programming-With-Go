@@ -9,7 +9,8 @@ import (
 Note: this program has a bug for demonstration purposes
 We demonstrate how to fix this problem in the next listing
 */
-// Problem is signalling or broadcasting when no goroutine is waiting. The signal is missed.
+// Problem is signalling or broadcasting when no goroutine is waiting.
+// The signal is missed in this case.
 func doWork(cond *sync.Cond) {
 	fmt.Println("Work started")
 	fmt.Println("Work finished")
