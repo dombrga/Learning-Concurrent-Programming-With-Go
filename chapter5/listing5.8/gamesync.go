@@ -6,7 +6,8 @@ import (
 	"time"
 )
 
-// The caller goroutine must hold the lock before calling Wait(). Otherwise, error sync: unlock of unlocked mutex.
+// The caller goroutine must hold the lock before calling Wait().
+// Otherwise, error sync: unlock of unlocked mutex.
 func playerHandler(cond *sync.Cond, playersRemaining *int, playerId int) {
 	cond.L.Lock()
 	fmt.Println(playerId, ": Connected")

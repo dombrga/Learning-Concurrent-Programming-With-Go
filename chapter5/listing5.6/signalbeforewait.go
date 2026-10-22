@@ -11,13 +11,12 @@ We demonstrate how to fix this problem in the next listing
 */
 // Problem is signalling or broadcasting when no goroutine is waiting.
 // The signal is missed in this case.
+// fatal error: all goroutines are asleep - deadlock!
 func doWork(cond *sync.Cond) {
 	fmt.Println("Work started")
 	fmt.Println("Work finished")
 
-	cond.L.Lock()
 	cond.Signal()
-	cond.L.Unlock()
 }
 
 func main() {
