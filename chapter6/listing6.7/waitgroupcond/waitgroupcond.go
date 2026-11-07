@@ -23,8 +23,9 @@ func (wg *WaitGroup) Add(delta int) {
 func (wg *WaitGroup) Wait() {
 	wg.cond.L.Lock()
 
+	// Suspend goroutines when there are outstanding/running goroutine.
 	for wg.groupSize > 0 {
-		wg.Wait()
+		wg.cond.Wait()
 	}
 
 	// wg.cond.Broadcast()
@@ -35,6 +36,7 @@ func (wg *WaitGroup) Done() {
 	wg.cond.L.Lock()
 	wg.groupSize--
 
+	// Broadcast when it is the last goroutine to resume suspended goroutines.
 	if wg.groupSize == 0 {
 		wg.cond.Broadcast()
 	}
