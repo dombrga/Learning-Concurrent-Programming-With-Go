@@ -12,7 +12,6 @@ func playerHandler(cond *sync.Cond, playersRemaining *int, playerId int) {
 	cond.L.Lock()
 	fmt.Println(playerId, ": Connected")
 	*playersRemaining--
-	cond.L.Unlock()
 
 	if *playersRemaining == 0 {
 		cond.Broadcast()
@@ -24,7 +23,7 @@ func playerHandler(cond *sync.Cond, playersRemaining *int, playerId int) {
 		cond.Wait()
 	}
 
-	// cond.L.Unlock()
+	cond.L.Unlock()
 	fmt.Println("All players connected. Ready player", playerId)
 	// Game started
 }
