@@ -1,9 +1,8 @@
-package main
+package barrier
 
 import (
-	"fmt"
+	"log"
 	"sync"
-	"time"
 )
 
 type Barrier struct {
@@ -21,33 +20,18 @@ func NewBarrier(size int) *Barrier {
 }
 
 func (b *Barrier) Wait() {
+	log.Println("called Wait")
 	b.cond.L.Lock()
 	b.waitCount++
 
+	// If the # of expected goroutines are now all waiting, call Broadcast to continue execution.
 	if b.waitCount == b.size {
 		b.waitCount = 0
 		b.cond.Broadcast()
 	} else {
-		// Suspend the goroutine when # of waiting goroutine is less than barrierSize.
+		// Suspend the goroutine when # of waiting goroutines is less than barrier size.
 		b.cond.Wait()
 	}
 
 	b.cond.L.Unlock()
-}
-
-func main() {
-	barrier := NewBarrier(2)
-	go workAndWait("Red", 2, barrier)
-	go workAndWait("Blue", 5, barrier)
-	time.Sleep(20 * time.Second)
-}
-
-func workAndWait(name string, timeToWork int, barrier *Barrier) {
-	start := time.Now()
-	for {
-		fmt.Println(time.Since(start), name, "is running")
-		time.Sleep(time.Duration(timeToWork) * time.Second)
-		fmt.Println(time.Since(start), name, "is waiting on barrier")
-		barrier.Wait()
-	}
 }
