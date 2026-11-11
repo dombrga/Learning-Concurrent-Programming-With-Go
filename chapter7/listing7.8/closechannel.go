@@ -18,8 +18,8 @@ func receiver(messages <-chan int) {
 }
 
 func anotherReceiver(messages <-chan int) {
-	// This syntax allows you to read all messages
-	// from a channel until it is closed.
+	// This syntax allows you to read all messages from a channel until it is closed.
+	// The loop stops when channel is closed.
 	for msg := range messages {
 		fmt.Println(time.Now().Format("15:04:05"), "Received", msg)
 		time.Sleep(1 * time.Second)
