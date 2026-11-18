@@ -39,7 +39,7 @@ func main() {
 	close(msgChannel)
 
 	// The following code will result to error since the channel
-	// is already closed and it is still sending message to
+	// is already closed due to close() and it is still sending message to
 	// the channel.
 	// for i := 1; i <= 3; i++ {
 	// 	fmt.Println(time.Now().Format("15:04:05"), "Sending", i)

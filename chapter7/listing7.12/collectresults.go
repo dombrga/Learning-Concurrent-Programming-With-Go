@@ -25,7 +25,7 @@ func main() {
 	fmt.Println(findFactors(478))
 	fmt.Println("after second")
 
-	// This print will not run until findFactors(3419110721) is finished
+	// This print will not run until line findFactors(3419110721) at line 21 is finished
 	// because "receiving" is a blocking operation until a value is sent.
 	fmt.Println(<-resultCh)
 }
