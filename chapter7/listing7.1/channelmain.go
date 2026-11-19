@@ -6,6 +6,7 @@ import "fmt"
 func main() {
 	msgChannel := make(chan string)
 	go receiver(msgChannel)
+
 	fmt.Println("Sending HELLO...")
 	msgChannel <- "HELLO"
 	fmt.Println("Sending THERE...")
